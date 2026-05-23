@@ -1,0 +1,115 @@
+---
+import { getFAQs } from '../lib/sanity';
+
+const sanityFaqs = await getFAQs();
+
+const defaultFaqs = [
+  {
+    question: "What is MoniMata?",
+    answer: "MoniMata is a zero-based budgeting app built specifically for Nigerians. It helps you assign every naira to a category before you spend it — with Pidgin nudges, bill payments via Interswitch, Mono bank sync, and offline-first storage."
+  },
+  {
+    question: "Is MoniMata free to use?",
+    answer: "Yes — MoniMata is completely free to use when it launches."
+  },
+  {
+    question: "What platforms is MoniMata available on?",
+    answer: "MoniMata will launch on Android first, with iOS support planned shortly after. Join the waitlist to be notified."
+  },
+  {
+    question: "What is zero-based budgeting?",
+    answer: "Zero-based budgeting means every naira of your income is assigned to a specific category — food, transport, savings, bills — until your unassigned balance hits ₦0. Nothing slips through the cracks."
+  },
+  {
+    question: "Can I pay bills inside the app?",
+    answer: "Yes. MoniMata integrates with Interswitch Quickteller so you can buy airtime, data, pay electricity, and cable TV bills directly from the app."
+  },
+  {
+    question: "Does it work offline?",
+    answer: "Absolutely. MoniMata uses WatermelonDB for offline-first storage. All your data is saved locally and syncs automatically when you're back online."
+  }
+];
+
+const faqs = sanityFaqs && sanityFaqs.length > 0 ? sanityFaqs : defaultFaqs;
+---
+
+<section id="faqs" class="w-full bg-bg">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
+    <div class="text-center mb-10">
+      <h2 class="text-text-heading text-3xl sm:text-4xl font-semibold">Frequently Asked Questions</h2>
+      <p class="mt-3 text-text-body text-base">We have answers to all your concerns</p>
+    </div>
+    <ul class="flex flex-col gap-3">
+      {faqs.map((faq: { question: string; answer: string }, index: number) => (
+        <li class="faq-item border border-primary-darker rounded-2xl overflow-hidden bg-bg" data-faq>
+          <button
+            class="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 text-left"
+            data-faq-toggle
+            aria-expanded="false"
+          >
+            <span class="text-text-faq text-base sm:text-lg font-semibold">{faq.question}</span>
+            <!-- Plus icon -->
+            <svg class="faq-plus w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <!-- Minus icon (hidden by default) -->
+            <svg class="faq-minus w-5 h-5 text-primary shrink-0 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+          <div class="faq-answer grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out">
+            <div class="overflow-hidden">
+              <div class="px-5 sm:px-6 pb-5 text-text-faq-answer text-sm sm:text-base leading-relaxed">
+                {faq.answer}
+              </div>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-faq-toggle]').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.closest('[data-faq]');
+      if (!item) return;
+      const answer = item.querySelector('.faq-answer') as HTMLElement;
+      const plus = item.querySelector('.faq-plus') as HTMLElement;
+      const minus = item.querySelector('.faq-minus') as HTMLElement;
+      const isOpen = answer?.classList.contains('grid-rows-[1fr]');
+
+      // Close all
+      document.querySelectorAll('[data-faq]').forEach(el => {
+        const a = el.querySelector('.faq-answer') as HTMLElement;
+        const p = el.querySelector('.faq-plus') as HTMLElement;
+        const m = el.querySelector('.faq-minus') as HTMLElement;
+        if (a) { a.classList.remove('grid-rows-[1fr]'); a.classList.add('grid-rows-[0fr]'); }
+        if (p) p.classList.remove('hidden');
+        if (m) m.classList.add('hidden');
+        el.querySelector('[data-faq-toggle]')?.setAttribute('aria-expanded', 'false');
+      });
+
+      if (!isOpen) {
+        if (answer) { answer.classList.remove('grid-rows-[0fr]'); answer.classList.add('grid-rows-[1fr]'); }
+        if (plus) plus.classList.add('hidden');
+        if (minus) minus.classList.remove('hidden');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Open first FAQ by default
+  const first = document.querySelector('[data-faq]');
+  if (first) {
+    const a = first.querySelector('.faq-answer') as HTMLElement;
+    const p = first.querySelector('.faq-plus') as HTMLElement;
+    const m = first.querySelector('.faq-minus') as HTMLElement;
+    if (a) { a.classList.remove('grid-rows-[0fr]'); a.classList.add('grid-rows-[1fr]'); }
+    if (p) p.classList.add('hidden');
+    if (m) m.classList.remove('hidden');
+    first.querySelector('[data-faq-toggle]')?.setAttribute('aria-expanded', 'true');
+  }
+</script>

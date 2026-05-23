@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Fonts ── */
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* ── Brand: Primary ── */
+  --color-primary: #0c3b2e;
+  --color-primary-dark: #0c251f;
+  --color-primary-darker: #0e1b14;
+
+  /* ── Brand: Accent ── */
+  --color-accent: #5fe876;
+  --color-accent-light: #72ff58;
+  --color-accent-lime: #7fac0d;
+
+  /* ── Backgrounds ── */
+  --color-bg: #f1faf8;
+  --color-bg-white: #ffffff;
+
+  /* ── Text ── */
+  --color-text-dark: #01081b;
+  --color-text-heading: #222222;
+  --color-text-body: #414141;
+  --color-text-muted: #4d525f;
+  --color-text-subtle: #5a5a5a;
+  --color-text-faq: #030806;
+  --color-text-faq-answer: #08120f;
+
+  /* ── Cards ── */
+  --color-card-yellow: #fef289;
+  --color-card-coral: #e67f60;
+  --color-card-mint: #aef8df;
+  --color-card-pink: #ffebeb;
+  --color-card-purple: #fde8fd;
+  --color-card-lime: #fbfff1;
+  --color-card-green-light: #e5f3e8;
+  --color-card-lavender: #eee2ee;
+  --color-card-lemon: #f9fbcf;
+
+  /* ── Gamification ── */
+  --color-gamification-pill: #8ac5a5;
+
+  /* ── Feature accents ── */
+  --color-feature-magenta: #dc19dc;
+  --color-feature-coral: #f8757b;
+
+  /* ── Misc ── */
+  --color-bg-subtle: #f7f7f7;
+  --color-cta-green: #34a853;
+  --color-line-connector: #c1d5e9;
+  --color-dot-pattern: #0c251f;
+}
+
+/* Base typography */
+html {
+  font-family: "Bricolage Grotesque", sans-serif;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+/* Scroll reveal animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.scroll-reveal:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.scroll-reveal:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.scroll-reveal:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
+/* Active nav link indicator */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #5fe876;
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
