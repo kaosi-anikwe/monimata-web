@@ -1,0 +1,32 @@
+---
+import PostLayout from "../../layouts/PostLayout.astro";
+import PortableTextRenderer from "../../components/PortableTextRenderer.astro";
+import { getPost, getPostSlugs } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const slugs = await getPostSlugs();
+  return slugs
+    .filter((s: any) => s.postType === "guide")
+    .map((s: any) => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = await getPost(slug!);
+
+if (!post) {
+  return Astro.redirect("/guides");
+}
+---
+
+<PostLayout
+  title={post.title}
+  excerpt={post.excerpt}
+  publishedAt={post.publishedAt}
+  tags={post.tags}
+  author={post.author}
+  mainImage={post.mainImage}
+  headings={post.headings}
+  postType="guide"
+>
+  <PortableTextRenderer body={post.body || []} />
+</PostLayout>

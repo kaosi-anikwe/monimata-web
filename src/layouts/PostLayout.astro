@@ -1,0 +1,435 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { urlFor } from "../lib/sanity";
+
+interface Heading {
+  key: string;
+  text: string;
+  level: "h2" | "h3";
+}
+
+interface Props {
+  title: string;
+  excerpt?: string;
+  publishedAt: string;
+  tags?: string[];
+  author?: {
+    name: string;
+    slug?: string;
+    avatar?: any;
+    bio?: string;
+    role?: string;
+  };
+  mainImage?: any;
+  headings?: Heading[];
+  postType?: "blog" | "guide";
+}
+
+const {
+  title,
+  excerpt,
+  publishedAt,
+  tags = [],
+  author,
+  mainImage,
+  headings = [],
+  postType = "blog",
+} = Astro.props;
+
+const formattedDate = new Date(publishedAt).toLocaleDateString("en-NG", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const avatarUrl = author?.avatar ? urlFor(author.avatar)?.width(80).height(80).url() : null;
+const coverUrl = mainImage ? urlFor(mainImage)?.width(1200).height(630).url() : null;
+const backHref = postType === "guide" ? "/guides" : "/blog";
+const backLabel = postType === "guide" ? "Guides" : "Blog";
+---
+
+<BaseLayout title={`${title} — MoniMata`} description={excerpt} ogImage={coverUrl || undefined}>
+  <Header />
+  <div class="min-h-screen bg-bg">
+    <!-- Back nav -->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pt-6">
+      <a href={backHref} class="inline-flex items-center gap-1.5 text-sm text-text-body hover:text-primary-dark transition">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        {backLabel}
+      </a>
+    </div>
+
+    <!-- Article header -->
+    <header class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10 pt-8 pb-6">
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-4">
+          {tags.map((tag: string) => (
+            <span class="inline-block bg-accent/10 text-primary-dark rounded-full px-3 py-1 text-xs font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <h1 class="text-text-heading text-3xl sm:text-4xl lg:text-[42px] font-bold leading-tight">
+        {title}
+      </h1>
+
+      {excerpt && (
+        <p class="mt-4 text-text-body text-lg leading-relaxed">{excerpt}</p>
+      )}
+
+      <div class="mt-6 flex items-center gap-4 text-sm text-text-muted">
+        {author && (
+          <div class="flex items-center gap-3">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={author.name} class="w-10 h-10 rounded-full object-cover" />
+            ) : (
+              <div class="w-10 h-10 rounded-full bg-primary-dark/10 flex items-center justify-center text-primary-dark font-semibold text-sm">
+                {author.name.charAt(0)}
+              </div>
+            )}
+            <div>
+              <div class="font-semibold text-text-heading">{author.name}</div>
+              {author.role && <div class="text-xs text-text-muted">{author.role}</div>}
+            </div>
+          </div>
+        )}
+        <span class="text-text-subtle">·</span>
+        <time datetime={publishedAt}>{formattedDate}</time>
+      </div>
+    </header>
+
+    {coverUrl && (
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10 mb-10">
+        <img
+          src={coverUrl}
+          alt={mainImage?.alt || title}
+          class="w-full rounded-2xl object-cover max-h-120"
+        />
+      </div>
+    )}
+
+    <!-- Main content + TOC sidebar -->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pb-20">
+      <div class="flex gap-10 lg:gap-16 relative">
+        <!-- Article body -->
+        <article id="article-body" class="prose-article min-w-0 flex-1 max-w-3xl">
+          <slot />
+        </article>
+
+        <!-- TOC sidebar -->
+        {headings.length > 0 && (
+          <aside class="hidden lg:block w-64 shrink-0">
+            <nav id="toc" class="sticky top-24">
+              <div class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-4">
+                On this page
+              </div>
+              <ul class="flex flex-col gap-1 border-l border-primary-darker/10">
+                {headings.map((h: Heading) => (
+                  <li>
+                    <a
+                      href={`#${h.key}`}
+                      class:list={[
+                        "toc-link block py-1.5 text-sm transition-colors border-l-2 -ml-px",
+                        h.level === "h3" ? "pl-6" : "pl-4",
+                      ]}
+                      data-heading-key={h.key}
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+        )}
+      </div>
+    </div>
+  </div>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  /* ── Article typography ── */
+  .prose-article {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--color-text-faq-answer);
+  }
+
+  .prose-article > * + * {
+    margin-top: 1.5em;
+  }
+
+  .prose-article h2 {
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
+    line-height: 1.3;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-heading);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose-article p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .prose-article a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+  }
+
+  .prose-article a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  .prose-article strong {
+    font-weight: 700;
+    color: var(--color-text-heading);
+  }
+
+  .prose-article em {
+    font-style: italic;
+  }
+
+  .prose-article code:not(pre code) {
+    background: var(--color-bg-subtle);
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    color: var(--color-primary-dark);
+  }
+
+  .prose-article blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding: 0.75em 1.25em;
+    margin-left: 0;
+    margin-right: 0;
+    background: var(--color-accent)/5;
+    color: var(--color-text-body);
+    font-style: italic;
+  }
+
+  .prose-article ul,
+  .prose-article ol {
+    padding-left: 1.5em;
+  }
+
+  .prose-article ul {
+    list-style-type: disc;
+  }
+
+  .prose-article ol {
+    list-style-type: decimal;
+  }
+
+  .prose-article li {
+    margin-top: 0.375em;
+    margin-bottom: 0.375em;
+  }
+
+  .prose-article li > ul,
+  .prose-article li > ol {
+    margin-top: 0.375em;
+  }
+
+  .prose-article img {
+    border-radius: 0.75rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .prose-article figure {
+    margin: 2em 0;
+  }
+
+  .prose-article figcaption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5em;
+  }
+
+  .prose-article hr {
+    border: none;
+    border-top: 1px solid var(--color-primary-darker)/10;
+    margin: 2.5em 0;
+  }
+
+  /* Code blocks */
+  .prose-article .code-block {
+    margin: 1.5em 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .prose-article .code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: #1e1e2e;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    font-family: ui-monospace, SFMono-Regular, monospace;
+  }
+
+  .prose-article .code-block pre {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    border-radius: 0;
+  }
+
+  .prose-article .code-block .shiki {
+    border-radius: 0;
+  }
+
+  /* Callouts */
+  .prose-article .callout {
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin: 1.5em 0;
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .prose-article .callout-info {
+    background: #eff6ff;
+    border-left: 3px solid #3b82f6;
+    color: #1e40af;
+  }
+
+  .prose-article .callout-warning {
+    background: #fefce8;
+    border-left: 3px solid #eab308;
+    color: #854d0e;
+  }
+
+  .prose-article .callout-tip {
+    background: #f0fdf4;
+    border-left: 3px solid var(--color-accent);
+    color: var(--color-primary-dark);
+  }
+
+  .prose-article .callout-note {
+    background: var(--color-bg-subtle);
+    border-left: 3px solid var(--color-text-muted);
+    color: var(--color-text-body);
+  }
+
+  .prose-article .callout-icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.125rem;
+  }
+
+  /* Video embeds */
+  .prose-article .video-embed {
+    margin: 2em 0;
+  }
+
+  .prose-article .video-embed iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 0.75rem;
+    border: none;
+  }
+
+  .prose-article .video-caption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5em;
+  }
+
+  /* ── TOC link states ── */
+  .toc-link {
+    color: var(--color-text-muted);
+    border-color: transparent;
+  }
+
+  .toc-link:hover {
+    color: var(--color-text-heading);
+  }
+
+  .toc-link.active {
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  // ── TOC scroll tracking ──
+  function initTocTracking() {
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+    if (tocLinks.length === 0) return;
+
+    const headingElements: HTMLElement[] = [];
+    tocLinks.forEach((link) => {
+      const key = link.dataset.headingKey;
+      if (key) {
+        const el = document.getElementById(key);
+        if (el) headingElements.push(el);
+      }
+    });
+
+    if (headingElements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            tocLinks.forEach((link) => {
+              link.classList.toggle("active", link.dataset.headingKey === id);
+            });
+          }
+        });
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
+    );
+
+    headingElements.forEach((el) => observer.observe(el));
+  }
+
+  // Run on load and on Astro page transitions
+  initTocTracking();
+  document.addEventListener("astro:after-swap", initTocTracking);
+</script>

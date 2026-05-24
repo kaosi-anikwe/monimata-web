@@ -1,12 +1,42 @@
 ---
-const platformLinks = ["Features", "How It Works", "Screenshots", "FAQs", "Privacy Policy", "Terms of Service"];
-const platformHrefs = ["#features", "#how-it-works", "#screenshots", "#faqs", "/privacy", "/terms"];
+const platformLinks = [
+  "Features",
+  "How It Works",
+  "Screenshots",
+  "FAQs",
+  "Blog",
+  "Guides",
+  "Privacy Policy",
+  "Terms of Service",
+];
+const platformHrefs = [
+  "#features",
+  "#how-it-works",
+  "#screenshots",
+  "#faqs",
+  "/blog",
+  "/guides",
+  "/privacy",
+  "/terms",
+];
 
 const socialIcons = [
-  { label: "Instagram", svg: `<rect width="20" height="20" rx="5" fill="none"/><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="14.5" cy="5.5" r="1" fill="currentColor"/><rect x="2" y="2" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5" fill="none"/>` },
-  { label: "Facebook", svg: `<path d="M18 2H15a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` },
-  { label: "Twitter", svg: `<path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` },
-  { label: "WhatsApp", svg: `<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` },
+  {
+    label: "Instagram",
+    svg: `<rect width="20" height="20" rx="5" fill="none"/><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="14.5" cy="5.5" r="1" fill="currentColor"/><rect x="2" y="2" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5" fill="none"/>`,
+  },
+  {
+    label: "Facebook",
+    svg: `<path d="M18 2H15a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  {
+    label: "Twitter",
+    svg: `<path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
+  {
+    label: "WhatsApp",
+    svg: `<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`,
+  },
 ];
 ---
 
@@ -14,38 +44,73 @@ const socialIcons = [
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
       <div class="lg:col-span-2 max-w-md">
-        <a href="#" class="flex items-center gap-3">
-          <img src="/images/logo.png" alt="MoniMata" class="h-12 sm:h-14 w-auto" />
-          <span class="text-primary-darker text-4xl sm:text-5xl font-semibold">MoniMata</span>
+        <a href="/" class="flex items-center gap-3">
+          <img
+            src="/images/logo.png"
+            alt="MoniMata"
+            class="h-12 sm:h-14 w-auto"
+          />
+          <span class="text-primary-darker text-4xl sm:text-5xl font-semibold"
+            >MoniMata</span
+          >
         </a>
         <p class="mt-5 text-black text-sm leading-relaxed">
-          Zero-based budgeting for Nigerians. Give every kobo a job with Pidgin nudges, Interswitch bill payments, Mono bank sync, and offline-first storage.
+          Zero-based budgeting for Nigerians. Give every kobo a job with Pidgin
+          nudges, Interswitch bill payments, Mono bank sync, and offline-first
+          storage.
         </p>
         <div class="mt-6 flex gap-3">
-          {socialIcons.map(({ label, svg }) => (
-            <a href="#" class="w-10 h-10 rounded-lg bg-primary-darker text-white flex items-center justify-center hover:opacity-80" aria-label={label}>
-              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" set:html={svg} />
-            </a>
-          ))}
+          {
+            socialIcons.map(({ label, svg }) => (
+              <a
+                href="#"
+                class="w-10 h-10 rounded-lg bg-primary-darker text-white flex items-center justify-center hover:opacity-80"
+                aria-label={label}
+              >
+                <svg
+                  class="w-4.5 h-4.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  set:html={svg}
+                />
+              </a>
+            ))
+          }
         </div>
       </div>
 
-      {[0].map(() => (
-        <div>
-          <h3 class="text-primary-darker text-base font-medium mb-4">Platform</h3>
-          <ul class="flex flex-col gap-3 text-sm text-black">
-            {platformLinks.map((l, i) => (
-              <li><a href={platformHrefs[i]} class="hover:opacity-70">{l}</a></li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {
+        [0].map(() => (
+          <div>
+            <h3 class="text-primary-darker text-base font-medium mb-4">
+              Platform
+            </h3>
+            <ul class="flex flex-col gap-3 text-sm text-black">
+              {platformLinks.map((l, i) => (
+                <li>
+                  <a href={platformHrefs[i]} class="hover:opacity-70">
+                    {l}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
 
       <div>
-        <h3 class="text-primary-darker text-base font-medium mb-4">Get Started</h3>
+        <h3 class="text-primary-darker text-base font-medium mb-4">
+          Get Started
+        </h3>
         <ul class="flex flex-col gap-3 text-sm text-black">
-          <li><a href="#cta" class="hover:opacity-70">Join Waitlist</a></li>
-          <li><a href="https://github.com/kaosi-anikwe/monimata" target="_blank" rel="noopener noreferrer" class="hover:opacity-70">GitHub</a></li>
+          <li><a href="/#cta" class="hover:opacity-70">Join Waitlist</a></li>
+          <li>
+            <a
+              href="https://github.com/kaosi-anikwe/monimata"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:opacity-70">GitHub</a>
+          </li>
         </ul>
       </div>
     </div>

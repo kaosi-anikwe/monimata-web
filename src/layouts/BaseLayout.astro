@@ -1,4 +1,6 @@
 ---
+import "../styles/global.css";
+
 interface Props {
   title?: string;
   description?: string;
@@ -14,7 +16,9 @@ const {
 } = Astro.props;
 
 const siteUrl = "https://monimata.ng";
-const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
+const fullOgImage = ogImage.startsWith("http")
+  ? ogImage
+  : `${siteUrl}${ogImage}`;
 const canonical = canonicalUrl || Astro.url.href;
 ---
 
@@ -25,7 +29,12 @@ const canonical = canonicalUrl || Astro.url.href;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="48x48"
+      href="/images/favicon.png"
+    />
     <link rel="apple-touch-icon" href="/images/logo.png" />
 
     <!-- Open Graph -->
@@ -51,36 +60,57 @@ const canonical = canonicalUrl || Astro.url.href;
     />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen w-full bg-bg text-primary-darker antialiased" style="font-family: 'Bricolage Grotesque', system-ui, sans-serif;">
+  <body
+    class="min-h-screen w-full bg-bg text-primary-darker antialiased"
+    style="font-family: 'Bricolage Grotesque', system-ui, sans-serif;"
+  >
     <slot />
 
     <!-- Smooth scroll for anchor links + Scroll reveal animations -->
     <script is:inline>
-      // Smooth scroll for all anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
+      // Smooth scroll for same-page anchor links
+      document.querySelectorAll('a[href*="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          // Extract the path and hash parts
+          const hashIndex = href.indexOf("#");
+          const path = href.slice(0, hashIndex);
+          const id = href.slice(hashIndex + 1);
+          if (!id) return;
+
+          // Only smooth-scroll if the link targets the current page
+          const isCurrentPage =
+            !path || (path === "/" && window.location.pathname === "/");
+          if (!isCurrentPage) return;
+
+          const target = document.getElementById(id);
           if (target) {
+            e.preventDefault();
             const headerOffset = 85;
             const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            const offsetPosition =
+              elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
           }
         });
       });
 
       // Intersection Observer for scroll reveal
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      );
 
-      document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+      document
+        .querySelectorAll(".scroll-reveal")
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
