@@ -76,12 +76,18 @@ const canonical = canonicalUrl || Astro.url.href;
           const hashIndex = href.indexOf("#");
           const path = href.slice(0, hashIndex);
           const id = href.slice(hashIndex + 1);
-          if (!id) return;
 
           // Only smooth-scroll if the link targets the current page
           const isCurrentPage =
             !path || (path === "/" && window.location.pathname === "/");
           if (!isCurrentPage) return;
+
+          // Empty hash = scroll to top
+          if (!id) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
 
           const target = document.getElementById(id);
           if (target) {
