@@ -60,7 +60,7 @@ const backLabel = category?.name ?? "Home";
 <BaseLayout
   title={`${title} — MoniMata`}
   description={excerpt}
-  ogImage={coverUrl || undefined}
+  ogImage={coverUrl || `/og/${category?.slug}/${Astro.params.slug}.png`}
 >
   <Header />
   <div class="min-h-screen bg-bg">

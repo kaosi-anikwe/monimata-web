@@ -26,6 +26,7 @@ const posts = await getPosts(categorySlug);
 <BaseLayout
   title={`${category.name} — MoniMata`}
   description={`${category.name} posts from MoniMata.`}
+  ogImage={`/og/${category.slug}.png`}
 >
   <Header />
   <div class="min-h-screen bg-bg">

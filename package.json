@@ -13,14 +13,17 @@
   },
   "dependencies": {
     "@monimata/schemas": "github:kaosi-anikwe/monimata-schemas",
+    "@resvg/resvg-js": "^2.6.2",
     "@sanity/client": "^7.22.0",
     "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.7",
     "astro-portabletext": "^0.13.0",
+    "satori": "^0.26.0",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "prettier": "3.8.3",
     "prettier-plugin-astro": "0.14.1"
   }
