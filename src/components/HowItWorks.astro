@@ -1,41 +1,85 @@
 ---
 const steps = [
-  { n: "1", title: "Create your account", desc: "Sign up in seconds with your email. Your data is secured with biometric app lock.", bg: "var(--color-card-pink)" },
-  { n: "2", title: "Add your income", desc: "Enter your salary, allowance, or any income source. MoniMata shows exactly how much you have to assign.", bg: "var(--color-card-green-light)" },
-  { n: "3", title: "Give every naira a job", desc: "Use zero-based budgeting or auto-assign with 5 smart strategies to allocate every kobo to categories.", bg: "var(--color-card-lavender)" },
-  { n: "4", title: "Track, pay bills & save", desc: "Log spending, pay airtime and bills via Interswitch, sync your bank with Mono, and hit your savings targets.", bg: "var(--color-card-lemon)" },
+  {
+    n: "1",
+    title: "Create your account",
+    desc: "Sign up in seconds with your email. Your data is secured with biometric app lock.",
+    bg: "var(--color-card-pink)",
+  },
+  {
+    n: "2",
+    title: "Add your income",
+    desc: "Enter your salary, allowance, or any income source. MoniMata shows exactly how much you have to assign.",
+    bg: "var(--color-card-green-light)",
+  },
+  {
+    n: "3",
+    title: "Give every naira a job",
+    desc: "Use zero-based budgeting or auto-assign with 5 smart strategies to allocate every kobo to categories.",
+    bg: "var(--color-card-lavender)",
+  },
+  {
+    n: "4",
+    title: "Track, pay bills & save",
+    desc: "Log spending, pay airtime and bills via Interswitch, sync your bank with Mono, and hit your savings targets.",
+    bg: "var(--color-card-lemon)",
+  },
 ];
+
+import { Image } from "astro:assets";
+import howItWorksMain from "../assets/images/how-it-works-main.png";
+import howItWorksOverlay from "../assets/images/how-it-works-overlay.png";
 ---
 
-<section class="w-full bg-bg">
+<section id="how-it-works" class="w-full bg-bg">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
     <div class="text-center max-w-2xl mx-auto mb-12">
-      <h2 class="text-text-heading text-3xl sm:text-4xl font-semibold">How MoniMata works</h2>
-      <p class="mt-3 text-text-body text-base">Get started in four simple steps</p>
+      <h2 class="text-text-heading text-3xl sm:text-4xl font-semibold">
+        How MoniMata works
+      </h2>
+      <p class="mt-3 text-text-body text-base">
+        Get started in four simple steps
+      </p>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
       <div class="relative pb-8 sm:pb-12">
-        <img src="/images/how-it-works-main.png" alt="" class="w-full rounded-3xl object-cover" />
-        <img src="/images/how-it-works-overlay.png" alt="Sample budget breakdown" class="hidden sm:block absolute -bottom-10 left-4 lg:left-8 w-60 lg:w-80 shadow-xl" />
+        <Image
+          src={howItWorksMain}
+          alt="How MoniMata zero-based budgeting works"
+          class="w-full rounded-3xl object-cover"
+        />
+        <Image
+          src={howItWorksOverlay}
+          alt="Sample budget breakdown"
+          class="hidden sm:block absolute -bottom-10 left-4 lg:left-8 w-60 lg:w-80 shadow-xl"
+        />
       </div>
 
       <ol class="relative flex flex-col gap-8">
-        <span class="hidden sm:block absolute left-6 top-6 bottom-6 w-px bg-line-connector" aria-hidden="true"></span>
-        {steps.map((s) => (
-          <li class="flex gap-4 items-start relative">
-            <div
-              class="shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-primary-darker font-semibold text-lg z-10"
-              style={`background:${s.bg}`}
-            >
-              {s.n}
-            </div>
-            <div>
-              <h3 class="text-text-heading text-lg font-semibold">{s.title}</h3>
-              <p class="mt-1 text-text-subtle text-sm leading-relaxed">{s.desc}</p>
-            </div>
-          </li>
-        ))}
+        <span
+          class="hidden sm:block absolute left-6 top-6 bottom-6 w-px bg-line-connector"
+          aria-hidden="true"></span>
+        {
+          steps.map((s) => (
+            <li class="flex gap-4 items-start relative">
+              <div
+                class="shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-primary-darker font-semibold text-lg z-10"
+                style={`background:${s.bg}`}
+              >
+                {s.n}
+              </div>
+              <div>
+                <h3 class="text-text-heading text-lg font-semibold">
+                  {s.title}
+                </h3>
+                <p class="mt-1 text-text-subtle text-sm leading-relaxed">
+                  {s.desc}
+                </p>
+              </div>
+            </li>
+          ))
+        }
       </ol>
     </div>
   </div>

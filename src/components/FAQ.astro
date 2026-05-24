@@ -71,6 +71,19 @@ const faqs = sanityFaqs && sanityFaqs.length > 0 ? sanityFaqs : defaultFaqs;
   </div>
 </section>
 
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq: { question: string; answer: string }) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+})} />
+
 <script>
   document.querySelectorAll('[data-faq-toggle]').forEach(button => {
     button.addEventListener('click', () => {

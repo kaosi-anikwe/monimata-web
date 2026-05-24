@@ -1,8 +1,11 @@
 ---
-
+import { Image } from "astro:assets";
+import whyFrame1 from "../assets/images/why-frame1.png";
+import whyFrame2 from "../assets/images/why-frame2.png";
+import whyFrame3 from "../assets/images/why-frame3.png";
 ---
 
-<section id="features" class="w-full bg-bg">
+<section id="why" class="w-full bg-bg">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
     <!-- Header -->
     <div class="grid lg:grid-cols-2 gap-10 items-center mb-12">
@@ -37,9 +40,10 @@
       <article
         class="lg:col-span-2 lg:row-span-2 relative rounded-3xl overflow-hidden min-h-105 flex flex-col justify-between p-6 sm:p-8 text-white"
       >
-        <img
-          src="/images/why-frame1.png"
+        <Image
+          src={whyFrame1}
           alt=""
+          role="presentation"
           class="absolute inset-0 w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-black/30"></div>
@@ -76,9 +80,10 @@
       <article
         class="relative rounded-3xl overflow-hidden min-h-65 flex flex-col justify-between p-6 text-white"
       >
-        <img
-          src="/images/why-frame2.png"
+        <Image
+          src={whyFrame2}
           alt=""
+          role="presentation"
           class="absolute inset-0 w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-black/30"></div>
@@ -116,9 +121,10 @@
       <article
         class="relative rounded-3xl overflow-hidden min-h-65 flex flex-col justify-between p-6 text-white"
       >
-        <img
-          src="/images/why-frame3.png"
+        <Image
+          src={whyFrame3}
           alt=""
+          role="presentation"
           class="absolute inset-0 w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-black/20"></div>

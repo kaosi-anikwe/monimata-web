@@ -14,7 +14,7 @@ import Footer from "../components/Footer.astro";
 
 <BaseLayout ogImage="/og/home.png">
   <Header />
-  <main>
+  <main id="main-content">
     <Hero />
     <Stats />
     <WhyMonimata />
@@ -25,4 +25,24 @@ import Footer from "../components/Footer.astro";
     <CTA />
   </main>
   <Footer />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: "MoniMata",
+          url: "https://monimata.ng",
+          logo: "https://monimata.ng/images/logo-full.svg",
+          description: "Zero-based budgeting app built for Nigerians.",
+        },
+        {
+          "@type": "WebSite",
+          name: "MoniMata",
+          url: "https://monimata.ng",
+        },
+      ],
+    })}
+  />
 </BaseLayout>

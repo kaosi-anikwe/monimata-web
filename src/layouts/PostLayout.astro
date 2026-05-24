@@ -63,7 +63,7 @@ const backLabel = category?.name ?? "Home";
   ogImage={coverUrl || `/og/${category?.slug}/${Astro.params.slug}.png`}
 >
   <Header />
-  <div class="min-h-screen bg-bg">
+  <main id="main-content" class="min-h-screen bg-bg">
     <!-- Back nav -->
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pt-6">
       <a
@@ -194,8 +194,30 @@ const backLabel = category?.name ?? "Home";
         }
       </div>
     </div>
-  </div>
+  </main>
   <Footer />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description: excerpt,
+      image:
+        coverUrl ||
+        `https://monimata.ng/og/${category?.slug}/${Astro.params.slug}.png`,
+      datePublished: publishedAt,
+      author: author ? { "@type": "Person", name: author.name } : undefined,
+      publisher: {
+        "@type": "Organization",
+        name: "MoniMata",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://monimata.ng/images/logo-full.svg",
+        },
+      },
+    })}
+  />
 </BaseLayout>
 
 <style is:global>
