@@ -12,7 +12,10 @@ import CTA from "../components/CTA.astro";
 import Footer from "../components/Footer.astro";
 ---
 
-<BaseLayout ogImage="/og/home.png">
+<BaseLayout
+  ogImage="/og/home.png"
+  keywords="budgeting app Nigeria, zero-based budgeting Nigeria, personal finance app Nigeria, money management app Nigeria, save money Nigeria, track expenses Nigeria, naira budgeting, bank alert Nigeria, automatic transaction capture Nigeria, Nigerian budget planner, kobo budgeting, offline budgeting app, zero based budgeting, email bank alert budgeting, budget tracker Nigeria"
+>
   <Header />
   <main id="main-content">
     <Hero />
@@ -29,13 +32,74 @@ import Footer from "../components/Footer.astro";
     type="application/ld+json"
     set:html={JSON.stringify({
       "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "MoniMata",
+      url: "https://monimata.ng",
+      logo: "https://monimata.ng/images/logo-full.svg",
+      image: "https://monimata.ng/og/home.png",
+      description:
+        "MoniMata is a zero-based budgeting app built for Nigerians, featuring automatic transaction capture from bank alert emails, receipt and statement OCR import, AI-powered categorisation, Pidgin-language nudges, and offline-first storage via WatermelonDB.",
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "iOS, Android",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "NGN",
+      },
+      featureList: [
+        "Zero-based budgeting",
+        "Email-based transaction capture",
+        "Statement PDF import",
+        "Receipt OCR import",
+        "Pidgin nudges",
+        "Offline-first storage",
+        "AI transaction categorisation",
+        "Savings goals and targets",
+        "Recurring transaction tracking",
+        "WatermelonDB sync",
+        "Open-source mobile app and API",
+      ],
+      audience: {
+        "@type": "Audience",
+        audienceType: "Nigerians",
+        geographicArea: {
+          "@type": "Country",
+          name: "Nigeria",
+        },
+      },
+      inLanguage: "en-NG",
+      publisher: {
+        "@type": "Organization",
+        name: "MoniMata",
+        url: "https://monimata.ng",
+        sameAs: [
+          "https://twitter.com/monimata_ng",
+          "https://github.com/kaosi-anikwe/monimata",
+        ],
+      },
+    })}
+  />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
           name: "MoniMata",
           url: "https://monimata.ng",
           logo: "https://monimata.ng/images/logo-full.svg",
-          description: "Zero-based budgeting app built for Nigerians.",
+          description:
+            "Open-source zero-based budgeting app built for Nigerians.",
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "NG",
+          },
+          areaServed: "Nigeria",
+          sameAs: [
+            "https://twitter.com/monimata_ng",
+            "https://github.com/kaosi-anikwe/monimata",
+          ],
         },
         {
           "@type": "WebSite",

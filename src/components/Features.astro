@@ -8,19 +8,19 @@ const features = [
   },
   {
     title: "Smart Nudges in Pidgin",
-    desc: "Get alerts like ‘Oga, you don spend too much on snacks o!’ — timely, culturally relevant nudges in Pidgin or English.",
+    desc: "Get alerts like 'Oga, your food budget don finish o! 3 days remain.' — timely, culturally relevant nudges in Pidgin or English.",
     iconBg: "var(--color-card-lime)",
     accent: "var(--color-accent-lime)",
   },
   {
-    title: "Bill Payments",
-    desc: "Pay airtime, data, electricity, and cable TV directly from the app via Interswitch Quickteller integration.",
+    title: "Bank Alert Capture",
+    desc: "Forward your bank alert emails once — every debit and credit is automatically parsed and added to your budget. No bank credentials needed.",
     iconBg: "var(--color-card-pink)",
     accent: "var(--color-feature-coral)",
   },
   {
-    title: "Mono Bank Sync",
-    desc: "Connect your bank account via Mono to auto-import transactions and keep your budget always up to date.",
+    title: "AI-Powered Categorisation",
+    desc: "Transactions are auto-categorised by merchant name and narration using rule-based matching and optional AI. Bring your own API key for premium models.",
     iconBg: "var(--color-card-lime)",
     accent: "var(--color-accent-lime)",
   },
@@ -36,15 +36,29 @@ const features = [
     iconBg: "var(--color-card-pink)",
     accent: "var(--color-feature-coral)",
   },
+  {
+    title: "Recurring Transaction Rules",
+    desc: "Automatically detect and track recurring debits — rent, subscriptions, loan repayments — and get notified before upcoming bills hit.",
+    iconBg: "var(--color-card-purple)",
+    accent: "var(--color-feature-magenta)",
+  },
+  {
+    title: "Statement & Receipt Import",
+    desc: "Upload a bank statement PDF or snap a receipt photo. Transactions are extracted via OCR and imported into your budget with deduplication.",
+    iconBg: "var(--color-card-lime)",
+    accent: "var(--color-accent-lime)",
+  },
 ];
 
 const icons: Record<string, string> = {
   "Zero-Based Budgeting": `<path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>`,
   "Smart Nudges in Pidgin": `<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>`,
-  "Bill Payments": `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>`,
-  "Mono Bank Sync": `<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>`,
+  "Bank Alert Capture": `<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>`,
+  "AI-Powered Categorisation": `<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/>`,
   "Savings Targets & Goals": `<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>`,
   "Offline-First Storage": `<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>`,
+  "Recurring Transaction Rules": `<path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M21.015 4.653v4.992"/>`,
+  "Statement & Receipt Import": `<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>`,
 };
 
 import { Image } from "astro:assets";
