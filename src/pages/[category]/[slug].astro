@@ -6,15 +6,17 @@ import { getPost, getPostSlugs } from "../../lib/sanity";
 export async function getStaticPaths() {
   const slugs = await getPostSlugs();
   return slugs
-    .filter((s: any) => s.postType === "blog" || !s.postType)
-    .map((s: any) => ({ params: { slug: s.slug } }));
+    .filter((s: any) => s.categorySlug)
+    .map((s: any) => ({
+      params: { category: s.categorySlug, slug: s.slug },
+    }));
 }
 
 const { slug } = Astro.params;
 const post = await getPost(slug!);
 
 if (!post) {
-  return Astro.redirect("/blog");
+  return Astro.redirect("/");
 }
 ---
 
@@ -26,7 +28,7 @@ if (!post) {
   author={post.author}
   mainImage={post.mainImage}
   headings={post.headings}
-  postType="blog"
+  category={post.category}
 >
   <PortableTextRenderer body={post.body || []} />
 </PostLayout>

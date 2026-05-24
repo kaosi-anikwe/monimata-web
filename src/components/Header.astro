@@ -1,5 +1,7 @@
 ---
+import { getHeaderCategories } from "../lib/sanity";
 
+const categories = await getHeaderCategories();
 ---
 
 <header
@@ -24,15 +26,24 @@
       </li>
       <li>
         <a href="/#how-it-works" class="hover:opacity-70 transition"
-          >How It Works</a>
+          >How It Works</a
+        >
       </li>
       <li>
         <a href="/#screenshots" class="hover:opacity-70 transition"
-          >Screenshots</a>
+          >Screenshots</a
+        >
       </li>
       <li><a href="/#faqs" class="hover:opacity-70 transition">FAQs</a></li>
-      <li><a href="/blog" class="hover:opacity-70 transition">Blog</a></li>
-      <li><a href="/guides" class="hover:opacity-70 transition">Guides</a></li>
+      {
+        categories.map((cat: any) => (
+          <li>
+            <a href={`/${cat.slug}`} class="hover:opacity-70 transition">
+              {cat.name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
 
     <div class="hidden md:block">
@@ -90,8 +101,15 @@
         <a href="/#screenshots" class="mobile-nav-link block">Screenshots</a>
       </li>
       <li><a href="/#faqs" class="mobile-nav-link block">FAQs</a></li>
-      <li><a href="/blog" class="mobile-nav-link block">Blog</a></li>
-      <li><a href="/guides" class="mobile-nav-link block">Guides</a></li>
+      {
+        categories.map((cat: any) => (
+          <li>
+            <a href={`/${cat.slug}`} class="mobile-nav-link block">
+              {cat.name}
+            </a>
+          </li>
+        ))
+      }
       <li>
         <a
           href="/#cta"

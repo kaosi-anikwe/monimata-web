@@ -1,23 +1,25 @@
 ---
+import { getHeaderCategories } from "../lib/sanity";
+
+const categories = await getHeaderCategories();
+
 const platformLinks = [
   "Features",
   "How It Works",
   "Screenshots",
   "FAQs",
-  "Blog",
-  "Guides",
+  ...categories.map((c: any) => c.name),
   "Privacy Policy",
   "Terms of Service",
 ];
 const platformHrefs = [
-  "#features",
-  "#how-it-works",
-  "#screenshots",
-  "#faqs",
-  "/blog",
-  "/guides",
-  "/privacy",
-  "/terms",
+  "/#features",
+  "/#how-it-works",
+  "/#screenshots",
+  "/#faqs",
+  ...categories.map((c: any) => `/${c.slug}`),
+  "/privacy-policy",
+  "/terms-of-service",
 ];
 
 const socialIcons = [
@@ -109,7 +111,8 @@ const socialIcons = [
               href="https://github.com/kaosi-anikwe/monimata"
               target="_blank"
               rel="noopener noreferrer"
-              class="hover:opacity-70">GitHub</a>
+              class="hover:opacity-70">GitHub</a
+            >
           </li>
         </ul>
       </div>

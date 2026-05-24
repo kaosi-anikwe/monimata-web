@@ -30,10 +30,16 @@ const authorProjection = `{
   role
 }`;
 
+const categoryProjection = `{
+  name,
+  "slug": slug.current,
+  showInHeader,
+}`;
+
 const postListProjection = `{
   title,
   "slug": slug.current,
-  postType,
+  "category": category->${categoryProjection},
   excerpt,
   publishedAt,
   mainImage,
@@ -44,7 +50,7 @@ const postListProjection = `{
 const postDetailProjection = `{
   title,
   "slug": slug.current,
-  postType,
+  "category": category->${categoryProjection},
   excerpt,
   publishedAt,
   mainImage,
@@ -58,12 +64,28 @@ const postDetailProjection = `{
   }
 }`;
 
-// ─── Posts (blog + guides) ───
+// ─── Categories ───
 
-export async function getPosts(type?: "blog" | "guide") {
+export async function getCategories() {
   if (!sanityClient) return [];
-  const filter = type
-    ? `_type == "post" && postType == "${type}"`
+  return sanityClient.fetch(
+    `*[_type == "category"] | order(name asc) ${categoryProjection}`
+  );
+}
+
+export async function getHeaderCategories() {
+  if (!sanityClient) return [];
+  return sanityClient.fetch(
+    `*[_type == "category" && showInHeader == true] | order(name asc) ${categoryProjection}`
+  );
+}
+
+// ─── Posts ───
+
+export async function getPosts(categorySlug?: string) {
+  if (!sanityClient) return [];
+  const filter = categorySlug
+    ? `_type == "post" && category->slug.current == "${categorySlug}"`
     : `_type == "post"`;
   return sanityClient.fetch(
     `*[${filter}] | order(publishedAt desc) ${postListProjection}`
@@ -81,7 +103,7 @@ export async function getPost(slug: string) {
 export async function getPostSlugs() {
   if (!sanityClient) return [];
   return sanityClient.fetch(
-    `*[_type == "post"]{ "slug": slug.current, postType }`
+    `*[_type == "post"]{ "slug": slug.current, "categorySlug": category->slug.current }`
   );
 }
 
@@ -96,10 +118,10 @@ export async function getFAQs() {
 
 // ─── API helpers (for mobile app consumption) ───
 
-export async function getPostsForAPI(type?: "blog" | "guide") {
+export async function getPostsForAPI(categorySlug?: string) {
   if (!sanityClient) return [];
-  const filter = type
-    ? `_type == "post" && postType == "${type}"`
+  const filter = categorySlug
+    ? `_type == "post" && category->slug.current == "${categorySlug}"`
     : `_type == "post"`;
   return sanityClient.fetch(
     `*[${filter}] | order(publishedAt desc) ${postDetailProjection}`

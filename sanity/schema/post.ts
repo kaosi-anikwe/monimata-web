@@ -17,17 +17,10 @@ export default {
             validation: (Rule: any) => Rule.required(),
         },
         {
-            name: "postType",
-            title: "Post Type",
-            type: "string",
-            options: {
-                list: [
-                    { title: "Blog Post", value: "blog" },
-                    { title: "Guide", value: "guide" },
-                ],
-                layout: "radio",
-            },
-            initialValue: "blog",
+            name: "category",
+            title: "Category",
+            type: "reference",
+            to: [{ type: "category" }],
             validation: (Rule: any) => Rule.required(),
         },
         {
