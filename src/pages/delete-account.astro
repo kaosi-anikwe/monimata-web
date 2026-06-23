@@ -1,0 +1,214 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Delete Account — MoniMata"
+  description="Request the deletion of your MoniMata account and all associated data."
+>
+  <Header />
+  <main id="main-content" class="pt-30 pb-20">
+    <div class="max-w-200 mx-auto px-8">
+      <h1 class="text-[48px] font-bold leading-[1.2] text-primary-dark mb-4">
+        Delete Your Account
+      </h1>
+      <p class="text-text-body leading-[1.7] mb-10 max-w-2xl">
+        We're sorry to see you go. Submitting this form will queue a permanent
+        deletion of your MoniMata account and all associated data — including
+        your profile, transaction history, budgets, and any linked bank
+        connections. This action <strong>cannot be undone</strong>.
+      </p>
+
+      <div
+        class="bg-card-pink border border-[#f5c6c6] rounded-2xl px-6 py-5 mb-10 max-w-2xl"
+      >
+        <p class="text-sm text-text-body leading-[1.6]">
+          <strong class="text-text-heading">What gets deleted:</strong> your account
+          credentials, personal profile, transaction data, budgets, goals, and all
+          other data tied to your account. Deletion is processed within
+          <strong>30 days</strong> of your request.
+        </p>
+      </div>
+
+      <div class="max-w-lg">
+        <form id="delete-account-form" class="space-y-6" novalidate>
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-text-heading mb-2"
+            >
+              Email address on your account
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@example.com"
+              class="w-full rounded-xl border border-black/15 bg-bg-white px-4 py-3 text-sm text-text-body placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            />
+            <p id="email-error" class="hidden mt-1.5 text-xs text-red-600"></p>
+          </div>
+
+          <div>
+            <label
+              for="reason"
+              class="block text-sm font-medium text-text-heading mb-2"
+            >
+              Reason for leaving <span class="text-text-muted font-normal"
+                >(optional)</span
+              >
+            </label>
+            <select
+              id="reason"
+              name="reason"
+              class="w-full rounded-xl border border-black/15 bg-bg-white px-4 py-3 text-sm text-text-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition appearance-none"
+            >
+              <option value="" disabled selected>Select a reason…</option>
+              <option value="no_longer_needed">I no longer need the app</option>
+              <option value="privacy_concerns">Privacy concerns</option>
+              <option value="switching_app">Switching to another app</option>
+              <option value="too_many_issues">Too many technical issues</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              for="confirm"
+              class="block text-sm font-medium text-text-heading mb-2"
+            >
+              Type <span
+                class="font-mono bg-black/5 px-1.5 py-0.5 rounded text-xs"
+                >DELETE</span
+              > to confirm
+            </label>
+            <input
+              type="text"
+              id="confirm"
+              name="confirm"
+              required
+              autocomplete="off"
+              placeholder="DELETE"
+              class="w-full rounded-xl border border-black/15 bg-bg-white px-4 py-3 text-sm text-text-body placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+            />
+            <p id="confirm-error" class="hidden mt-1.5 text-xs text-red-600">
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full rounded-xl bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold text-sm py-3.5 transition cursor-pointer"
+          >
+            Submit deletion request
+          </button>
+
+          <p
+            id="form-success"
+            class="hidden text-sm text-primary font-medium text-center pt-2"
+          >
+            ✓ Your deletion request has been received. We'll process it within
+            30 days.
+          </p>
+          <p
+            id="form-error"
+            class="hidden text-sm text-red-600 text-center pt-2"
+          >
+            Something went wrong. Please email
+            <a href="mailto:support@monimata.ng" class="underline"
+              >support@monimata.ng</a
+            >
+            to request deletion.
+          </p>
+        </form>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-black/10 max-w-2xl">
+        <h2 class="text-lg font-semibold text-text-heading mb-3">
+          Prefer to contact us directly?
+        </h2>
+        <p class="text-sm text-text-body leading-[1.7]">
+          Email <a
+            href="mailto:support@monimata.ng"
+            class="text-primary underline underline-offset-2 hover:opacity-70 transition"
+            >support@monimata.ng</a
+          > with the subject line <strong>"Account Deletion Request"</strong> and
+          include the email address registered to your account. We'll confirm and
+          process your request within 30 days.
+        </p>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  const form = document.getElementById(
+    "delete-account-form",
+  ) as HTMLFormElement;
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const confirmInput = document.getElementById("confirm") as HTMLInputElement;
+  const emailError = document.getElementById("email-error")!;
+  const confirmError = document.getElementById("confirm-error")!;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const formSuccess = document.getElementById("form-success")!;
+  const formErrorMsg = document.getElementById("form-error")!;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    // Reset
+    emailError.classList.add("hidden");
+    confirmError.classList.add("hidden");
+    formSuccess.classList.add("hidden");
+    formErrorMsg.classList.add("hidden");
+
+    // Validate email
+    const emailVal = emailInput.value.trim();
+    if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      emailError.textContent = "Please enter a valid email address.";
+      emailError.classList.remove("hidden");
+      valid = false;
+    }
+
+    // Validate confirmation word
+    if (confirmInput.value.trim() !== "DELETE") {
+      confirmError.textContent = "Please type DELETE exactly to confirm.";
+      confirmError.classList.remove("hidden");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting…";
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch("https://formspree.io/f/placeholder", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        form.reset();
+        formSuccess.classList.remove("hidden");
+        submitBtn.classList.add("hidden");
+      } else {
+        formErrorMsg.classList.remove("hidden");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit deletion request";
+      }
+    } catch {
+      formErrorMsg.classList.remove("hidden");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit deletion request";
+    }
+  });
+</script>
